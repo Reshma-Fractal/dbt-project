@@ -1,4 +1,4 @@
-M golang:1.13 as builder
+FROM golang:1.13 as builder
 WORKDIR /app
 COPY invoke.go ./
 RUN CGO_ENABLED=0 GOOS=linux go build -v -o server
