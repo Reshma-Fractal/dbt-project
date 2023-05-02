@@ -10,5 +10,5 @@ COPY --from=builder /app/server ./
 COPY script.sh ./
 COPY . ./
 
-ENTRYPOINT "./script.sh"
+ENTRYPOINT "./server"
 
