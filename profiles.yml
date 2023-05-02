@@ -2,7 +2,7 @@ jaffle_shop:
   outputs:
     dev:
       dataset: jaffle_shop
-      job_execution_timeout_seconds: 300
+      job_execution_timeout_seconds: 3000
       job_retries: 1
       location: US
       method: service-account
