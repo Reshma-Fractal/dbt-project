@@ -5,7 +5,7 @@ jaffle_shop:
       job_execution_timeout_seconds: 3000
       job_retries: 1
       location: US
-        #method: oauth
+      method: service-account
       priority: interactive
       project: coe-landing-zone-18-ats-2246
       threads: 4
