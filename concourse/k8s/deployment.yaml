@@ -15,7 +15,7 @@ spec:
       hostNetwork: true
       containers:
       - name: hello-world-app
-        image: us-east1-docker.pkg.dev/coe-landing-zone-18-ats-2246/gke-cicd-repo/hello-world:<tag>
+        image: us-central1-docker.pkg.dev/vocal-tracer-393715/gke-test/hello-world:<tag>
         #image: <image_repo>:<tag>
         ports:
           - containerPort: 8000
