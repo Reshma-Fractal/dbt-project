@@ -16,6 +16,6 @@ spec:
       containers:
       - name: hello-world-app
         #image: us-east1-docker.pkg.dev/coe-landing-zone-18-ats-2246/gke-cicd-repo/hello-world:1.1
-        image: us-central1-docker.pkg.dev/vocal-tracer-393715/gke-test/hello-world:1.1
+        image: us-central1-docker.pkg.dev/vocal-tracer-393715/gke-test/hello-world:{{tag}}
         ports:
           - containerPort: 8000
