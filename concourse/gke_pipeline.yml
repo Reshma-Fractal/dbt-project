@@ -1,0 +1,69 @@
+resources:
+# The repo with our Dockerfile
+- name: gke-app
+  type: git
+  icon: github
+  source:
+    uri: ((git_url))
+    branch: ((git_branch))
+
+# Where we will push the image
+- name: artifactory-registry
+  type: registry-image
+  source:
+    repository: ((artifact_repo))  
+    #registry: us-east1-docker.pkg.dev
+    username: _json_key
+    password: ((service_account))
+    tag: ((image_tag))
+
+    
+
+jobs:
+- name: build-and-push
+  plan:
+  - get: gke-app
+    trigger: true
+  - task: build-task-image
+    privileged: true
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: concourse/oci-build-task
+      inputs:
+      - name: gke-app
+      outputs:
+      - name: image
+      params:
+        CONTEXT: gke-app/concourse
+      run:
+        path: build  
+  - put: artifactory-registry
+    params:
+      image: image/image.tar
+  
+  - task: authenticate-with-gcp
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: gcr.io/google.com/cloudsdktool/cloud-sdk
+      inputs:
+      - name: gke-app
+      run:
+        path: bash
+        args:
+        - -c
+        - |
+           echo "$GOOGLE_JSON_CREDENTIALS" > /tmp/coe-landing-zone-1036154.json
+           gcloud auth activate-service-account --key-file=/tmp/coe-landing-zone-1036154.json
+           set -x
+           gcloud container clusters get-credentials ((cluster_name)) --location ((location)) --project ((project_id))
+           #kubectl apply -f gke-app/concourse/k8s/deployment.yaml
+           cat gke-app/concourse/k8s/deployment.yaml | sed "s/<tag>/((image_tag))/g" | kubectl apply -f -
+           kubectl apply -f gke-app/concourse/k8s/service.yaml
+      params:
+        GOOGLE_JSON_CREDENTIALS:  ((service_account))
