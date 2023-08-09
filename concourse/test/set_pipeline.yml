@@ -35,9 +35,9 @@ jobs:
 
                 echo "git_url : ((git_url))" > input.yml
                 echo "git_branch : ((git_branch))" >> input.yml
-                echo "service_account : ((service_account))" >> input.yml
-                echo "image_tag : $COMMIT_ID" >> input.yml
-                cat input.yml
+                echo "service_account : ((service_account))" >> commit-id/input.yml
+                echo "image_tag : $COMMIT_ID" >> commit-id/input.yml
+                cat commit-id/input.yml
                 pwd 
                 ls
             dir: gke-app
