@@ -41,7 +41,7 @@ jobs:
         vars:
           git_url: ((git_url))
           git_branch : ((git_branch))
-          #image_tag: ((image_tag))
+          image_tag: ((image_tag))
           artifact_repo : ((artifact_repo))
           service_account : ((service_account))
 
@@ -55,7 +55,7 @@ jobs:
       - set_pipeline: bq-deploy-test
         file: gke-app/concourse/test/test.yml
         vars:
-          image_tag: ((image_tag))
+          #image_tag: ((image_tag))
           git_url: ((git_url))
           git_branch : ((git_branch))
           artifact_repo : ((artifact_repo))
