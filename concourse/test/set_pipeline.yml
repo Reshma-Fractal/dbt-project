@@ -41,10 +41,9 @@ jobs:
         vars:
           git_url: ((git_url))
           git_branch : ((git_branch))
-          image_tag: $commit_id
+          #image_tag: ((image_tag))
           artifact_repo : ((artifact_repo))
           service_account : ((service_account))
-        
 
   
   - name: "set-protected-build-pipelines"
