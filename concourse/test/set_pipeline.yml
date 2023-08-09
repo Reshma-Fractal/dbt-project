@@ -26,6 +26,7 @@ jobs:
         file: gke-app/concourse/test/test.yml
         vars:
           image_tag: '2.5.0'
-          #environment: test
+          git_url: ((git_url))
+          git_branch : ((git_branch))
       
 
