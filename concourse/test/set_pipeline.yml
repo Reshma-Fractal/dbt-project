@@ -30,17 +30,17 @@ jobs:
             args:
             - -cx
             - |
-                echo $(git log -n1 --format="%h")
-                COMMIT_ID=$(git log -n1 --format="%h")
+                echo $(cd gke-app && git log -n1 --format="%h")
+                COMMIT_ID=$(cd gke-app && git log -n1 --format="%h")
 
-                echo "git_url : ((git_url))" > input.yml
-                echo "git_branch : ((git_branch))" >> input.yml
+                echo "git_url : ((git_url))" > commit-id/input.yml
+                echo "git_branch : ((git_branch))" >> commit-id/input.yml
                 echo "service_account : ((service_account))" >> commit-id/input.yml
                 echo "image_tag : $COMMIT_ID" >> commit-id/input.yml
                 cat commit-id/input.yml
                 pwd 
                 ls
-            dir: gke-app
+           # dir: gke-app
       - load_var: branches
         file: commit-id/input.yml
       - set_pipeline: self
