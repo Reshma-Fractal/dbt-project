@@ -18,6 +18,7 @@ jobs:
         vars:
           git_url: ((git_url))
           git_branch : ((git_branch))
+          image_tag: ((image_tag))
 
   
   - name: "set-protected-build-pipelines"
