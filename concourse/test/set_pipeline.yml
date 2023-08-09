@@ -32,6 +32,6 @@ jobs:
           git_url: ((git_url))
           git_branch : ((git_branch))
           artifact_repo : us-central1-docker.pkg.dev/vocal-tracer-393715/gke-test/hello-world
-          service_account : ((service_account))
+          service_account : test123
       
 
