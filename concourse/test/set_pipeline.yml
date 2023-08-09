@@ -1,0 +1,31 @@
+
+resources:
+# The repo with our Dockerfile
+ - name: gke-app
+   type: git
+   icon: github
+   source:
+     uri: ((git_url))
+     branch: ((git_branch))
+
+jobs:
+  - name: set-self
+    plan:
+      - get: gke-app
+        trigger: true
+      - set_pipeline: self
+        file: gke-app/concourse/test/set_pipeline.yml
+
+  
+  - name: "set-protected-build-pipelines"
+    plan:
+      - get: gke-app
+        trigger: true
+        passed: [set-self]
+      - set_pipeline: bq-deploy-test
+        file: gke-app/concourse/test/test.yml
+        vars:
+          image_tag: '2.5.0'
+          #environment: test
+      
+
