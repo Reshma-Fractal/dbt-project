@@ -28,5 +28,7 @@ jobs:
           image_tag: '2.5.0'
           git_url: ((git_url))
           git_branch : ((git_branch))
+          artifact_repo : ((artifact_repo))
+          password : ((password))
       
 
