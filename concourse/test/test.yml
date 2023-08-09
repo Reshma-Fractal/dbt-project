@@ -16,7 +16,7 @@ resources:
      repository: ((artifact_repo))  
      username: _json_key
      password: ((service_account))
-     #tag: ((image_tag))
+     tag: ((image_tag))
   
 jobs:
 - name: build-and-push
@@ -45,6 +45,6 @@ jobs:
    - put: artifactory-registry
      params: 
         image: image/image.tar
-        version: ((image_tag))
+        #version: ((image_tag))
 
   
