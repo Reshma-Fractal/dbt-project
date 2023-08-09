@@ -49,7 +49,11 @@ jobs:
         file: gke-app/concourse/test/set_pipeline.yml
         vars: 
           git_url: ((.:branches.git_url))
-          environment: dev
+          git_branch: ((.:branches.git_branch))
+          image_tag: ((.:branches.image_tag))
+          artifact_repo: ((.:branches.artifact_repo))
+          service_account: ((.:branches.service_account))
+          #environment: dev
       #- set_pipeline: self
       #  file: gke-app/concourse/test/set_pipeline.yml
         #load-var : value
