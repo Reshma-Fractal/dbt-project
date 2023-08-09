@@ -37,6 +37,7 @@ jobs:
                 echo "git_branch : ((git_branch))" >> commit-id/input.yml
                 echo "service_account : ((service_account))" >> commit-id/input.yml
                 echo "image_tag : $COMMIT_ID" >> commit-id/input.yml
+                echo "artifact_repo : ((artifact_repo))" >> commit-id/input.yml
                 cat commit-id/input.yml
                 pwd 
                 ls
