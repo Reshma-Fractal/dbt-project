@@ -24,24 +24,20 @@ jobs:
           inputs:
           - name: gke-app
           outputs:
-          - name: commit_id
+          - name: commit-id
           run:
             path: sh
             args:
             - -cx
             - |
-                echo $(git log -n1 --format="%h")
-                COMMIT_ID=$(git rev-parse --short HEAD)
-                export commit_id='1.2'
-                #echo $id
-                #echo $BUILD_ID
+                echo $(git rev-parse HEAD) > commit-id.txt
             dir: gke-app
       - set_pipeline: self
         file: gke-app/concourse/test/set_pipeline.yml
         vars:
           git_url: ((git_url))
           git_branch : ((git_branch))
-          image_tag:   ((.$commit_id))
+          image_tag:   ((cat commit-id/commit-id.txt))
           artifact_repo : ((artifact_repo))
           service_account : ((service_account))
 
