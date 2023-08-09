@@ -31,7 +31,7 @@ jobs:
             - -cx
             - |
                 commit_id=echo $(git rev-parse HEAD) > commit-id.txt
-                echo $(git_url: ((git_url))) >> input.yml
+                echo "git_url=((git_url))" > input.yml
                 cat input.yml
             dir: gke-app
       - set_pipeline: self
