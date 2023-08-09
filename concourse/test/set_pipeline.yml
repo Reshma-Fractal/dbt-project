@@ -30,7 +30,9 @@ jobs:
             args:
             - -cx
             - |
-                echo $(git rev-parse HEAD) > commit-id.txt
+                commit_id=echo $(git rev-parse HEAD) > commit-id.txt
+                echo $(git_url: ((git_url))) >> input.yml
+                cat input.yml
             dir: gke-app
       - set_pipeline: self
         file: gke-app/concourse/test/set_pipeline.yml
@@ -41,7 +43,7 @@ jobs:
           artifact_repo : ((artifact_repo))
           service_account : ((service_account))
 
-  
+
   - name: "set-protected-build-pipelines"
     plan:
       - get: gke-app
