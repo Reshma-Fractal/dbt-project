@@ -1,0 +1,72 @@
+
+resources:
+# The repo with our Dockerfile
+ - name: gke-app
+   type: git
+   icon: github
+   source:
+     uri: ((git_url))
+     branch: ((git_branch))
+
+
+# Where we will push the image
+ - name: artifactory-registry
+   type: registry-image
+   source:
+     repository: ((artifact_repo))  
+     username: _json_key
+     password: ((service_account))
+     #tag: ((image_tag))
+  
+jobs:
+- name: build-and-push
+  #privileged: true
+  plan:
+   - get: gke-app
+     trigger: true
+  
+   - task: build-task-image
+     privileged: true
+     config:
+       platform: linux
+       image_resource:
+         type: registry-image
+         source:
+           repository: concourse/oci-build-task
+       inputs:
+       - name: gke-app
+       outputs:
+       - name: image
+       params:
+         CONTEXT: gke-app/concourse
+       run:
+         path: build
+   - task: tag-the-image
+     config:
+       platform: linux
+       image_resource:
+         type: registry-image
+         source:
+           repository: concourse/git-resource
+       inputs:
+       - name: gke-app
+       outputs:
+       - name: commit_id
+       run:
+         path: sh
+         args:
+         - -cx
+         - |
+            echo $(git log -n1 --format="%h")
+            COMMIT_ID=$(git rev-parse --short HEAD)
+            export commit_id='1.2'
+            #echo $id
+            #echo $BUILD_ID
+         dir: gke-app
+ 
+   - put: artifactory-registry
+     params: 
+        image: image/image.tar
+        version: ((image_tag))
+
+  
