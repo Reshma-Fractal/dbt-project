@@ -41,7 +41,7 @@ jobs:
         vars:
           git_url: ((git_url))
           git_branch : ((git_branch))
-          image_tag: ((image_tag))
+          image_tag: echo $commit_id
           artifact_repo : ((artifact_repo))
           service_account : ((service_account))
 
@@ -61,4 +61,3 @@ jobs:
           artifact_repo : ((artifact_repo))
           service_account : ((service_account))
       
-
