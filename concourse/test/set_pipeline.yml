@@ -30,8 +30,13 @@ jobs:
             args:
             - -cx
             - |
-                commit_id=echo $(git rev-parse HEAD) > commit-id.txt
-                echo "git_url=((git_url))" > input.yml
+                echo $(git log -n1 --format="%h")
+                COMMIT_ID=$(git log -n1 --format="%h")
+                echo "git_url : ((git_url))" > input.yml
+                echo "git_branch : ((git_branch))" >> input.yml
+                echo "git_url : ((artifact_repo))" >> input.yml
+                echo "service_account : ((service_account))" >> input.yml
+                echo "image_tag : $COMMIT_ID" >> input.yml
                 cat input.yml
             dir: gke-app
       - set_pipeline: self
