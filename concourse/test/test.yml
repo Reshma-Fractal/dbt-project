@@ -41,29 +41,7 @@ jobs:
          CONTEXT: gke-app/concourse
        run:
          path: build
-   - task: tag-the-image
-     config:
-       platform: linux
-       image_resource:
-         type: registry-image
-         source:
-           repository: concourse/git-resource
-       inputs:
-       - name: gke-app
-       outputs:
-       - name: commit_id
-       run:
-         path: sh
-         args:
-         - -cx
-         - |
-            echo $(git log -n1 --format="%h")
-            COMMIT_ID=$(git rev-parse --short HEAD)
-            export commit_id='1.2'
-            #echo $id
-            #echo $BUILD_ID
-         dir: gke-app
- 
+    
    - put: artifactory-registry
      params: 
         image: image/image.tar
