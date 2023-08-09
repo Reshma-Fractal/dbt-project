@@ -19,6 +19,8 @@ jobs:
           git_url: ((git_url))
           git_branch : ((git_branch))
           image_tag: ((image_tag))
+          artifact_repo : ((artifact_repo))
+          service_account : ((service_account))
 
   
   - name: "set-protected-build-pipelines"
@@ -55,7 +57,7 @@ jobs:
           image_tag: ((image_tag))
           git_url: ((git_url))
           git_branch : ((git_branch))
-          artifact_repo : us-central1-docker.pkg.dev/vocal-tracer-393715/gke-test/hello-world
-          service_account : test123
+          artifact_repo : ((artifact_repo))
+          service_account : ((service_account))
       
 
